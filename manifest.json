@@ -1,0 +1,19 @@
+{
+  "rows": 4415,
+  "rotations": 165,
+  "airports": 105,
+  "ac_types": [
+    "A319",
+    "A320",
+    "A321",
+    "A330",
+    "A350"
+  ],
+  "consecutive_pairs": 4250,
+  "turn_p5": 45.0,
+  "turn_median": 75.0,
+  "turn_p90": 550.0,
+  "sha256": "5a2e44576c83297b83af6ef35d2ff78aa3642d22c4e4e3da7e50f4b88ef94116",
+  "seed": null,
+  "source": "weekly airline timetable export, not redistributed"
+}

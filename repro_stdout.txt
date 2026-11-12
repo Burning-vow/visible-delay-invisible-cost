@@ -1,0 +1,4 @@
+assigned_release_delay_min = 75
+during day : punctuality_raw = 0.0  delayed_count = 2
+end of day : punctuality     = 1.00 (100.0 per cent)  delayed_count = 0
+V3 REPRODUCED
