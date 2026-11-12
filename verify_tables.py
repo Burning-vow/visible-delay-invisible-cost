@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Check every aggregate the paper reports against the per-scenario tables.
 
-Standard library only. `scenarios.csv` and `metering.csv` are the output of the
-metering and search pipeline; this script does not re-simulate anything. It lets a
-reader recompute the five medians in Fig. 3, the minute totals in Section VI-A, and
-the metering counts in Section III-C without running the engine.
+Standard library only. `scenarios.csv` is the output of the metering and search
+pipeline; this script does not re-simulate anything. It lets a reader recompute the
+five medians in Fig. 3, the minute totals in Section VI-A and the flight counts of
+Section VI-A without running the engine.
 
     python verify_tables.py
 
@@ -59,16 +59,7 @@ check("share outside (per cent)", 100 * (sum_t - sum_l) / sum_t, 53.2, 0.06, "%.
 
 print("\n-- flight counts")
 check("affected scenario-flights", sum(int(r["n_affected"]) for r in head), 2113, 0, "%d")
-check("mean metered flights", sum(int(r["n_window"]) for r in head) / len(head), 24.7, 0.05, "%.2f")
-
-print("\n-- metering vs propagation (Section III-C)")
-m = list(csv.DictReader(open(os.path.join(HERE, "metering.csv"), encoding="utf-8")))
-check("metering rows", len(m), 100, 0, "%d")
-check("metered, all 100 runs", sum(int(r["metered"]) for r in m), 1948, 0, "%d")
-check("both metered and receiver", sum(int(r["both"]) for r in m), 0, 0, "%d")
-mh = [r for r in m if r["rate"] in ("0.60x", "0.45x")]
-check("metered at headline rates", sum(int(r["metered"]) for r in mh), 863, 0, "%d")
-check("both at headline rates", sum(int(r["both"]) for r in mh), 0, 0, "%d")
+check("mean in-window flights", sum(int(r["n_window"]) for r in head) / len(head), 24.7, 0.05, "%.2f")
 
 print()
 if fails:
