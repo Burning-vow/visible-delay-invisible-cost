@@ -15,6 +15,9 @@ punctual day.
 | `manifest.json` | Counts and the SHA-256 of `schedule.csv`. |
 | `make_schedule.py` | Rebuilds `schedule.csv` from the source export, or verifies the shipped file against the manifest without any third-party package. |
 | `reproduce_v3.py` | Runs the audited engine and shows V3: assigned delay stays positive, the end-of-day punctuality indicator reads 100 %. |
+| `scenarios.csv` | One row per scenario and release rate: 20 peak blocks × 5 rates. `T` is the created cost in delay-minutes, `L` the cost the system books, `ratio` their quotient, `n_window` and `n_affected` the two flight sets the ledgers cover. |
+| `metering.csv` | For the same 100 runs: how many departures were metered, how many of those also receive propagated delay, and how many are both. |
+| `verify_tables.py` | Recomputes the five medians of Fig. 3, the minute totals of Section VI-A and the metering counts of Section III-C from the two tables. Standard library only. |
 | `repro_stdout.txt` | The raw output of one real run of `reproduce_v3.py`. |
 | `REPRO_LOG.md` | Version pinning, engine hashes, and the commands that produced the output. |
 
@@ -38,6 +41,17 @@ python make_schedule.py --verify
 
 This needs only the standard library. It checks the on-disk hash and the six counts against
 `manifest.json`, and exits non-zero on any mismatch.
+
+## Checking the five medians
+
+```
+python verify_tables.py
+```
+
+Standard library only. It recomputes, from `scenarios.csv` and `metering.csv`, the five medians
+plotted in Fig. 3, the minute totals of Section VI-A and the metering counts of Section III-C, and
+exits non-zero on any mismatch. The two tables are the output of the metering and search pipeline,
+so the script checks every aggregate the paper reports; it does not re-simulate the runs.
 
 ## Reproducing V3
 
